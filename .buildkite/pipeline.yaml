@@ -1,0 +1,3 @@
+steps:
+  - label: Build a Thing
+    command: /bin/true
