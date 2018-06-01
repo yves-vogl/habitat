@@ -1,3 +1,106 @@
 steps:
-  - label: Build a Thing
+  - label: ":habicat: core/hab"
     command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: ":habicat: :hammer_and_wrench: core/hab-plan-build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: ":habicat: core/hab-backline"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":habicat: core/hab-bintray-publish"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: ":habicat: core/hab-studio"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: ":habicat: core/hab-sup"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  # Exporters
+
+  - label: ":habicat: core/hab-pkg-aci Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":cloudfoundry: core/hab-pkg-cfize Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":docker: core/hab-pkg-export-docker Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":k8s: core/hab-pkg-export-kubernetes Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":helm: core/hab-pkg-export-helm Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":habicat: core/hab-pkg-export-tar Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":habicat: core/hab-pkg-mesosize Build"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - block: ":shipit: Release!"
+
+  - label: ":habicat: Promote Release to Stable"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: "Promote Bintray Releases"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":mac: Promote Homebrew Release"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: "Build Bootstrap Bundle and push to :s3:"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: "Add core/backline to Acceptance Environment"
+    command: /bin/true
+    agents:
+      queue: habitat-release
