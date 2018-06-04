@@ -1,6 +1,16 @@
+# TODO (CM): To build from a tag, look at BUILDKITE_TAG
+#            If there's something there, generate a channel and emit release steps;
+#            Otherwise, do nothing (eventually, emit normal everyday CI steps)
+#
+
+# TODO Also need to wean off of TravisCI as we're doing this. We'll
+# probably keep the Mac and Windows builds where they are for now, for
+# instance.
+
 steps:
   - label: ":habicat: core/hab"
-    command: .buildkite/scripts/build-component.sh hab
+    command: /bin/true
+    # command: .buildkite/scripts/build-component.sh hab
     agents:
       queue: habitat-release
 
@@ -76,31 +86,19 @@ steps:
     agents:
       queue: habitat-release
 
-  - block: ":shipit: Release!"
+  - block: "Promote launcher to release channel?"
 
-  - label: ":habicat: Promote Release to Stable"
-    command: /bin/true
-    agents:
-      queue: habitat-release
+  - block: ":shipit: Release (?)"
+    prompt: "Is it good to release, or do we need to go back to the drawing board?"
+    fields:
+      select: "Action"
+      required: true
+      key: "release-action"
+      options:
+        - label: "Release"
+          value: "release"
+        - label: "Abort"
+          value: "abort"
 
-  - wait
-
-  - label: "Promote Bintray Releases"
-    command: /bin/true
-    agents:
-      queue: habitat-release
-
-  - label: ":mac: Promote Homebrew Release"
-    command: /bin/true
-    agents:
-      queue: habitat-release
-
-  - label: "Build Bootstrap Bundle and push to :s3:"
-    command: /bin/true
-    agents:
-      queue: habitat-release
-
-  - label: "Add core/backline to Acceptance Environment"
-    command: /bin/true
-    agents:
-      queue: habitat-release
+  - label: ":pipeline:"
+    command: .buildkite/finish_release.sh

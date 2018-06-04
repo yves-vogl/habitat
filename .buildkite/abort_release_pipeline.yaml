@@ -1,0 +1,7 @@
+steps:
+  # NOTE: This needs to be done in both the success AND failure cases,
+  # so be sure to properly abstract that logic
+  - label: ":crying_cat_face: Destroy release channel"
+    command: /bin/true
+    agents:
+      queue: habitat-release
