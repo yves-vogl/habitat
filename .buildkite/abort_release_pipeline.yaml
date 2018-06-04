@@ -5,3 +5,11 @@ steps:
     command: /bin/true
     agents:
       queue: habitat-release
+
+  - wait
+
+  # TODO: This works, but feels wrong
+  - label: ":skull_and_crossbones: Failure"
+    command: /bin/false
+    agents:
+      queue: habitat-release
