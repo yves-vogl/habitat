@@ -47,9 +47,9 @@ import_key
 # echo
 
 
-#HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
-hab pkg build "components/${component}"
+#hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
     cat results/logs/*.log
