@@ -40,10 +40,9 @@ hab pkg build "components/${component}"
 
 source results/last_build.env
 
-echo "--- :buildkite: Storing artifact ${pkg_ident}"
-
 case "${component}" in
     "hab")
+        echo "--- :buildkite: Storing artifact ${pkg_ident}"
         buildkite-agent artifact upload "results/${pkg_artifact}"
         buildkite-agent meta-data set "hab-version" "${pkg_ident}"
         ;;
@@ -53,20 +52,15 @@ esac
 
 channel=$(buildkite-agent meta-data get "release-channel")
 
-echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel} channel:"
+echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel:"
 hab pkg upload \
     --channel="${channel}" \
     --auth="${HAB_TEAM_AUTH_TOKEN}" \
     "results/${pkg_artifact}"
 
-# TODO (CM): Push to Builder in a release channel
-# TODO (CM): pass a release channel in as an argument / environment variable
-# TODO (CM): pass an auth token in environment
 # TODO (CM): Keep the HART as an artifact in Buildkite?
 #            Might be a good way to ensure that we've got the hab
 #            version we just built
-# TODO (CM): pass in an origin key and import it
-
 
 # In Travis, we had to have logic for pushing depending on whether
 # we're doing a release build or not. Since we can construct the
