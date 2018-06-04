@@ -91,14 +91,14 @@ steps:
   - block: ":shipit: Release (?)"
     prompt: "Is it good to release, or do we need to go back to the drawing board?"
     fields:
-      select: "Action"
-      required: true
-      key: "release-action"
-      options:
-        - label: "Release"
-          value: "release"
-        - label: "Abort"
-          value: "abort"
+      - select: "Action"
+        required: true
+        key: "release-action"
+        options:
+          - label: "Release"
+            value: "release"
+          - label: "Abort"
+            value: "abort"
 
   - label: ":pipeline:"
     command: .buildkite/finish_release.sh
