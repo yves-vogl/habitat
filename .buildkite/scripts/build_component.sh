@@ -45,7 +45,7 @@ esac
 
 channel=$(buildkite-agent meta-data get "release-channel")
 
-echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel:"
+echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel"
 hab pkg upload \
     --channel="${channel}" \
     --auth="${HAB_TEAM_AUTH_TOKEN}" \

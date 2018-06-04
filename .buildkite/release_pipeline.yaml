@@ -4,21 +4,21 @@
 
 steps:
   - label: ":habicat: core/hab"
-    command: .buildkite/scripts/build-component.sh hab
+    command: .buildkite/scripts/build_component.sh hab
     agents:
       queue: habitat-release
 
   - wait
 
   - label: ":habicat: :hammer_and_wrench: core/hab-plan-build"
-    command: .buildkite/scripts/build-component.sh plan-build
+    command: .buildkite/scripts/build_component.sh plan-build
     agents:
       queue: habitat-release
 
   - wait
 
   - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
-    command: .buildkite/scripts/build-component.sh backline
+    command: .buildkite/scripts/build_component.sh backline
     agents:
       queue: habitat-release
 
@@ -82,9 +82,9 @@ steps:
     agents:
       queue: habitat-release
 
-  - block: "Promote launcher to release channel?"
+  - block: ":thumbs_up: Promote Launcher to Release Channel?"
 
-  - block: ":shipit: Release (?)"
+  - block: ":shipit: :question:"
     prompt: "Is it good to release, or do we need to go back to the drawing board?"
     fields:
       - select: "Action"
