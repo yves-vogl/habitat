@@ -55,15 +55,19 @@ channel=$(buildkite-agent meta-data get "release-channel")
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel:"
 
 echo "--- BEFORE"
-echo "HAB_CACHE_KEY_PATH: ${HAB_CACHE_KEY_PATH}"
-echo $(ls -alh $HAB_CACHE_KEY_PATH)
+echo "/hab/cache/keys"
+echo $(ls -alh /hab/cache/keys)
+echo "~/.hab/cache/keys"
+echo $(ls -alh ~/.hab/cache/keys)
 
 
 hab origin key download core
 
 echo "--- AFTER"
-echo "HAB_CACHE_KEY_PATH: ${HAB_CACHE_KEY_PATH}"
-echo $(ls -alh $HAB_CACHE_KEY_PATH)
+echo "/hab/cache/keys"
+echo $(ls -alh /hab/cache/keys)
+echo "~/.hab/cache/keys"
+echo $(ls -alh ~/.hab/cache/keys)
 
 hab pkg upload \
     --channel="${channel}" \
