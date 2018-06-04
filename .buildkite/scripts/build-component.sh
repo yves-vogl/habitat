@@ -53,6 +53,18 @@ esac
 channel=$(buildkite-agent meta-data get "release-channel")
 
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel:"
+
+echo "--- BEFORE"
+echo "HAB_CACHE_KEY_PATH: ${HAB_CACHE_KEY_PATH}"
+echo $(ls -alh $HAB_CACHE_KEY_PATH)
+
+
+hab origin key download core
+
+echo "--- AFTER"
+echo "HAB_CACHE_KEY_PATH: ${HAB_CACHE_KEY_PATH}"
+echo $(ls -alh $HAB_CACHE_KEY_PATH)
+
 hab pkg upload \
     --channel="${channel}" \
     --auth="${HAB_TEAM_AUTH_TOKEN}" \
