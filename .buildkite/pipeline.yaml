@@ -22,7 +22,7 @@ steps:
 
   - wait
 
-  - label: ":habicat: core/hab-backline"
+  - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
     command: /bin/true
     agents:
       queue: habitat-release
