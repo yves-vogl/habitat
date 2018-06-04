@@ -101,4 +101,4 @@ steps:
             value: "abort"
 
   - label: ":pipeline:"
-    command: .buildkite/finish_release.sh
+    command: .buildkite/scripts/finish_release.sh
