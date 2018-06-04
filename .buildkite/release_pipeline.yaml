@@ -3,19 +3,19 @@
 # instance.
 
 steps:
-  # - label: ":habicat: core/hab"
-  #   command: .buildkite/scripts/build-component.sh hab
-  #   agents:
-  #     queue: habitat-release
+  - label: ":habicat: core/hab"
+    command: .buildkite/scripts/build-component.sh hab
+    agents:
+      queue: habitat-release
 
-  # - wait
+  - wait
 
-  # - label: ":habicat: :hammer_and_wrench: core/hab-plan-build"
-  #   command: /bin/true
-  #   agents:
-  #     queue: habitat-release
+  - label: ":habicat: :hammer_and_wrench: core/hab-plan-build"
+    command: .buildkite/scripts/build-component.sh plan-build
+    agents:
+      queue: habitat-release
 
-  # - wait
+  - wait
 
   - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
     command: .buildkite/scripts/build-component.sh backline
