@@ -4,8 +4,13 @@ set -euo pipefail
 
 component=${1}
 
+set +e
 hab pkg build "components/${component}"
 
+if [[ "$?" != "0" ]]; then
+    cat results/logs/*.log
+    exit 1
+fi
 # TODO (CM): Push to Builder in a release channel
 # TODO (CM): pass a release channel in as an argument / environment variable
 # TODO (CM): pass an auth token in environment
