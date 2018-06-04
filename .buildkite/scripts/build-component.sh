@@ -11,23 +11,30 @@ component=${1}
 
 
 
-import_key() {
-    echo "--- :closed_lock_with_key: Importing origin secret key"
-cat << EOF > core.sig.key
-SIG-SEC-1
-core-20160810182414
-
-${HAB_ORIGIN_KEY}
-EOF
-
-if [ -n "$HAB_ORIGIN_KEY" ]; then
-    hab origin key import < ./core.sig.key
-fi
-# todo else ERROR
-rm ./core.sig.key
+import_keys() {
+    echo "--- :key: Downloading 'core' public key from Builder"
+    hab origin key download core
+    echo "--- :closed_lock_with_key: Downloading 'core' secret key from Builder"
+    hab origin key download \
+        --auth="${HAB_TEAM_AUTH_TOKEN}" \
+        --secret \
+        core
 }
+#     cat << EOF > core.sig.key
+# SIG-SEC-1
+# core-20160810182414
 
-import_key
+# ${HAB_ORIGIN_KEY}
+# EOF
+
+# if [ -n "$HAB_ORIGIN_KEY" ]; then
+#     hab origin key import < ./core.sig.key
+# fi
+# # todo else ERROR
+# rm ./core.sig.key
+# }
+
+import_keys
 
 echo "--- :zap: Cleaning up old studio, if present"
 hab studio rm
