@@ -3,15 +3,33 @@
 # instance.
 
 steps:
-  - label: ":habicat: core/hab"
+  - label: ":linux: :habicat: core/hab"
     command: .buildkite/scripts/build_component.sh hab
+    agents:
+      queue: habitat-release
+
+  # TODO: Implement this
+  - label: ":windows: :habicat: core/hab"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  # TODO: Implement this
+  - label: ":mac: :habicat: core/hab"
+    command: /bin/true
     agents:
       queue: habitat-release
 
   - wait
 
-  - label: ":habicat: :hammer_and_wrench: core/hab-plan-build"
+  - label: ":linux: :habicat: :hammer_and_wrench: core/hab-plan-build"
     command: .buildkite/scripts/build_component.sh plan-build
+    agents:
+      queue: habitat-release
+
+  # TODO: Implement this
+  - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
+    command: /bin/true
     agents:
       queue: habitat-release
 
@@ -24,21 +42,37 @@ steps:
 
   # TODO: Need to upload things to the proper bintray channels when we
   # build them... or maybe once we've built them all?
-  - label: ":habicat: core/hab-bintray-publish"
+  - label: ":linux: :habicat: core/hab-bintray-publish"
     command: .buildkite/scripts/build_component.sh bintray-publish
     agents:
       queue: habitat-release
 
-  - wait
-
-  - label: ":habicat: core/hab-studio"
-    command: .buildkite/scripts/build_component.sh studio
+  - label: ":windows: :habicat: core/hab-bintray-publish"
+    command: /bin/true
     agents:
       queue: habitat-release
 
   - wait
 
-  - label: ":habicat: core/hab-sup"
+  - label: ":linux: :habicat: core/hab-studio"
+    command: .buildkite/scripts/build_component.sh studio
+    agents:
+      queue: habitat-release
+
+  - label: ":windows: :habicat: core/hab-studio"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  - label: ":linux: :habicat: core/hab-sup"
+    command: /bin/true
+    agents:
+      queue: habitat-release
+
+  # TODO: Implement this
+  - label: ":windows: :habicat: core/hab-sup"
     command: /bin/true
     agents:
       queue: habitat-release
@@ -58,6 +92,7 @@ steps:
     agents:
       queue: habitat-release
 
+  # TODO: Windows, too
   - label: ":docker: core/hab-pkg-export-docker"
     command: /bin/true
     agents:
@@ -73,6 +108,7 @@ steps:
     agents:
       queue: habitat-release
 
+  # TODO: Windows, too
   - label: ":package: core/hab-pkg-export-tar"
     command: /bin/true
     agents:
@@ -84,6 +120,7 @@ steps:
     agents:
       queue: habitat-release
 
+  # TODO: Need all versions (linux and windows)
   - block: ":thumbsup: Promote Launcher to Release Channel?"
 
   - block: ":shipit: :question:"

@@ -16,6 +16,11 @@ if [[ "${FAKE_RELEASE_TAG}" || "${BUILDKITE_TAG}" ]]; then
     fi
 
     echo "Release channel is '${channel}'"
+
+    # TODO (CM): Should we proactively destroy the channel here if it
+    # already exists?
+
+
     buildkite-agent meta-data set "release-channel" "${channel}"
     buildkite-agent pipeline upload .buildkite/release_pipeline.yaml
 else
