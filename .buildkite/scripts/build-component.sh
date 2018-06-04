@@ -38,10 +38,14 @@ export HAB_ORIGIN=core
 export HAB_NONINTERACTIVE=1
 hab pkg build "components/${component}"
 
-if [[ "$?" != "0" ]]; then
-    cat results/logs/*.log
-    exit 1
-fi
+source results/last_build.env
+
+echo "--- :buildkite: Storing artifact ${pkg_ident}"
+buildkite-agent artifact upload "results/${pkg_artifact}"
+
+echo "--- :habicat: Uploading ${pkg_ident} to Builder in the XXX channel:"
+echo "I would do something here"
+
 # TODO (CM): Push to Builder in a release channel
 # TODO (CM): pass a release channel in as an argument / environment variable
 # TODO (CM): pass an auth token in environment
