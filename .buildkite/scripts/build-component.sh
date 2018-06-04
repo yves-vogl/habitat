@@ -29,30 +29,13 @@ rm ./core.sig.key
 
 import_key
 
-
-
-# echo "--- Debugging"
-# echo "PWD: $(pwd)"
-# echo "ls: $(ls -alh)"a
-# echo ""
-# echo "/hab/bin: $(ls -alh /hab/bin)"
-# echo "/hab/bin/build: $(cat /hab/bin/build)"
-
-# set +e
-# hab studio run ls -alh components/${component}
-# hab studio run ls -alh /hab/bin/
-# echo
-# hab studio run cat /hab/bin/build
-# echo
-
-echo "--- :zap: Clean up old studio, if present"
+echo "--- :zap: Cleaning up old studio, if present"
 hab studio rm
 
-echo "--- :habicat: Build components/${component}"
+echo "--- :habicat: Building components/${component}"
 unset HAB_BINLINK_DIR
-HAB_NONINTERACTIVE=1 HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
-
-#hab pkg build "components/${component}"
+export HAB_ORIGIN=core
+hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
     cat results/logs/*.log
