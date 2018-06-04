@@ -9,8 +9,7 @@
 
 steps:
   - label: ":habicat: core/hab"
-    command: /bin/true
-    # command: .buildkite/scripts/build-component.sh hab
+    command: .buildkite/scripts/build-component.sh hab
     agents:
       queue: habitat-release
 
