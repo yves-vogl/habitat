@@ -35,6 +35,7 @@ hab studio rm
 echo "--- :habicat: Building components/${component}"
 unset HAB_BINLINK_DIR
 export HAB_ORIGIN=core
+export HAB_NONINTERACTIVE=1
 hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
