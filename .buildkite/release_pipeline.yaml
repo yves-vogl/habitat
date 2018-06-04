@@ -82,7 +82,7 @@ steps:
     agents:
       queue: habitat-release
 
-  - block: ":thumbs_up: Promote Launcher to Release Channel?"
+  - block: ":thumbsup: Promote Launcher to Release Channel?"
 
   - block: ":shipit: :question:"
     prompt: "Is it good to release, or do we need to go back to the drawing board?"
