@@ -46,8 +46,8 @@ import_key
 # hab studio run cat /hab/bin/build
 # echo
 
-
-HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+hab studio rm
+HAB_NONINTERACTIVE=1 HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
 #hab pkg build "components/${component}"
 
