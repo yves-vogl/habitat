@@ -12,6 +12,7 @@ component=${1}
 
 
 import_key() {
+    echo "--- :closed_lock_with_key: Importing origin secret key"
 cat << EOF > core.sig.key
 SIG-SEC-1
 core-20160810182414
@@ -20,13 +21,11 @@ ${HAB_ORIGIN_KEY}
 EOF
 
 if [ -n "$HAB_ORIGIN_KEY" ]; then
-    echo "IMPORTING KEY"
     hab origin key import < ./core.sig.key
 fi
-
+# todo else ERROR
 rm ./core.sig.key
 }
-
 
 import_key
 
@@ -46,7 +45,10 @@ import_key
 # hab studio run cat /hab/bin/build
 # echo
 
+echo "--- :zap: Clean up old studio, if present"
 hab studio rm
+
+echo "--- :habicat: Build components/${component}"
 unset HAB_BINLINK_DIR
 HAB_NONINTERACTIVE=1 HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
