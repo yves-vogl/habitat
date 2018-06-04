@@ -7,7 +7,9 @@ component=${1}
 echo "--- Debugging"
 echo "PWD: $(pwd)"
 echo "ls: $(ls -alh)"a
-
+echo ""
+echo "/hab/bin: $(ls -alh /hab/bin)"
+echo "/hab/bin/build: $(cat /hab/bin/build)"
 
 set +e
 hab pkg build "components/${component}"
