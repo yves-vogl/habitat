@@ -41,10 +41,23 @@ hab pkg build "components/${component}"
 source results/last_build.env
 
 echo "--- :buildkite: Storing artifact ${pkg_ident}"
-buildkite-agent artifact upload "results/${pkg_artifact}"
 
-echo "--- :habicat: Uploading ${pkg_ident} to Builder in the XXX channel:"
-echo "I would do something here"
+case "${component}" in
+    "hab")
+        buildkite-agent artifact upload "results/${pkg_artifact}"
+        buildkite-agent meta-data set "hab-version" "${pkg_ident}"
+        ;;
+    *)
+        ;;
+esac
+
+channel=$(buildkite-agent meta-data get "release-channel")
+
+echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel} channel:"
+hab pkg upload \
+    --channel="${channel}" \
+    --auth="${HAB_TEAM_AUTH_TOKEN}" \
+    "results/${pkg_artifact}"
 
 # TODO (CM): Push to Builder in a release channel
 # TODO (CM): pass a release channel in as an argument / environment variable

@@ -1,8 +1,3 @@
-# TODO (CM): To build from a tag, look at BUILDKITE_TAG
-#            If there's something there, generate a channel and emit release steps;
-#            Otherwise, do nothing (eventually, emit normal everyday CI steps)
-#
-
 # TODO Also need to wean off of TravisCI as we're doing this. We'll
 # probably keep the Mac and Windows builds where they are for now, for
 # instance.
@@ -50,37 +45,39 @@ steps:
 
   # Exporters
 
-  - label: ":habicat: core/hab-pkg-aci Build"
+  # TODO: Create an ACI emoji
+  - label: ":habicat: core/hab-pkg-aci"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":cloudfoundry: core/hab-pkg-cfize Build"
+  - label: ":cloudfoundry: core/hab-pkg-cfize"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":docker: core/hab-pkg-export-docker Build"
+  - label: ":docker: core/hab-pkg-export-docker"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":k8s: core/hab-pkg-export-kubernetes Build"
+  - label: ":k8s: core/hab-pkg-export-kubernetes"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":helm: core/hab-pkg-export-helm Build"
+  - label: ":helm: core/hab-pkg-export-helm"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":habicat: core/hab-pkg-export-tar Build"
+  - label: ":package: core/hab-pkg-export-tar"
     command: /bin/true
     agents:
       queue: habitat-release
 
-  - label: ":habicat: core/hab-pkg-mesosize Build"
+  # TODO: Create a Mesos emoji
+  - label: ":habicat: core/hab-pkg-mesosize"
     command: /bin/true
     agents:
       queue: habitat-release
