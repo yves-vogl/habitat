@@ -9,6 +9,8 @@ set -euo pipefail
 # etc.
 component=${1}
 
+channel=$(buildkite-agent meta-data get "release-channel")
+
 # TODO (CM): Extract this function to somewhere else?
 import_keys() {
     echo "--- :key: Downloading 'core' public keys from Builder"
@@ -30,7 +32,7 @@ unset HAB_BINLINK_DIR # This is set by releng, but seems to be messing
 # things up for us in the studio
 export HAB_ORIGIN=core
 export HAB_NONINTERACTIVE=1
-hab pkg build "components/${component}"
+HAB_BLDR_CHANNEL="${channel}" hab pkg build "components/${component}"
 source results/last_build.env
 
 case "${component}" in
@@ -42,8 +44,6 @@ case "${component}" in
     *)
         ;;
 esac
-
-channel=$(buildkite-agent meta-data get "release-channel")
 
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel"
 hab pkg upload \

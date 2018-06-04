@@ -22,15 +22,17 @@ steps:
     agents:
       queue: habitat-release
 
+  # TODO: Need to upload things to the proper bintray channels when we
+  # build them... or maybe once we've built them all?
   - label: ":habicat: core/hab-bintray-publish"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh bintray-publish
     agents:
       queue: habitat-release
 
   - wait
 
   - label: ":habicat: core/hab-studio"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh studio
     agents:
       queue: habitat-release
 
