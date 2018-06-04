@@ -4,14 +4,19 @@ set -euo pipefail
 
 component=${1}
 
-echo "--- Debugging"
-echo "PWD: $(pwd)"
-echo "ls: $(ls -alh)"a
-echo ""
-echo "/hab/bin: $(ls -alh /hab/bin)"
-echo "/hab/bin/build: $(cat /hab/bin/build)"
+# echo "--- Debugging"
+# echo "PWD: $(pwd)"
+# echo "ls: $(ls -alh)"a
+# echo ""
+# echo "/hab/bin: $(ls -alh /hab/bin)"
+# echo "/hab/bin/build: $(cat /hab/bin/build)"
 
 set +e
+hab studio run ls -alh components/${component}
+hab studio run ls -alh /hab/bin/
+echo
+hab studio run cat /hab/bin/build
+echo
 hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
