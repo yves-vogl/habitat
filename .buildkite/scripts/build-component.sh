@@ -47,7 +47,7 @@ import_key
 # echo
 
 
-HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
 #hab pkg build "components/${component}"
 
