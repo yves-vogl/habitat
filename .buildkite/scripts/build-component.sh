@@ -17,7 +17,11 @@ hab studio run ls -alh /hab/bin/
 echo
 hab studio run cat /hab/bin/build
 echo
-hab pkg build "components/${component}"
+
+
+HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+
+#hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
     cat results/logs/*.log
