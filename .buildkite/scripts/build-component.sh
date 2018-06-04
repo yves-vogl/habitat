@@ -2,7 +2,35 @@
 
 set -euo pipefail
 
+
+
+
+
+
 component=${1}
+
+
+
+import_key() {
+cat << EOF > core.sig.key
+SIG-SEC-1
+core-20160810182414
+
+${HAB_ORIGIN_KEY}
+EOF
+
+if [ -n "$HAB_ORIGIN_KEY" ]; then
+    echo "IMPORTING KEY"
+    hab origin key import < ./core.sig.key
+fi
+
+rm ./core.sig.key
+}
+
+
+import_key
+
+
 
 # echo "--- Debugging"
 # echo "PWD: $(pwd)"
@@ -11,17 +39,17 @@ component=${1}
 # echo "/hab/bin: $(ls -alh /hab/bin)"
 # echo "/hab/bin/build: $(cat /hab/bin/build)"
 
-set +e
-hab studio run ls -alh components/${component}
-hab studio run ls -alh /hab/bin/
-echo
-hab studio run cat /hab/bin/build
-echo
+# set +e
+# hab studio run ls -alh components/${component}
+# hab studio run ls -alh /hab/bin/
+# echo
+# hab studio run cat /hab/bin/build
+# echo
 
 
-HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+#HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
-#hab pkg build "components/${component}"
+hab pkg build "components/${component}"
 
 if [[ "$?" != "0" ]]; then
     cat results/logs/*.log
