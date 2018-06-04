@@ -47,7 +47,8 @@ import_key
 # echo
 
 hab studio rm
-HAB_STUDIO_SECRET_HAB_BINLINK_DIR=$HOME/tools/bin HAB_NONINTERACTIVE=1 HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
+unset HAB_BINLINK_DIR
+HAB_NONINTERACTIVE=1 HAB_ORIGIN=core HAB_STUDIO_SUP=false hab studio run "build components/${component}"
 
 #hab pkg build "components/${component}"
 
