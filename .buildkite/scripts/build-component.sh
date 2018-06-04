@@ -4,6 +4,11 @@ set -euo pipefail
 
 component=${1}
 
+echo "--- Debugging"
+echo "PWD: $(pwd)"
+echo "ls: $(ls -alh)"a
+
+
 set +e
 hab pkg build "components/${component}"
 
