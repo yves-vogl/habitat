@@ -2,6 +2,7 @@ steps:
 
   - label: ":habicat: Promote Release to Stable"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
@@ -9,40 +10,47 @@ steps:
 
   - label: "Promote Bintray Releases"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: ":mac: Promote Homebrew Release"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: "Build Bootstrap Bundle and push to :s3:"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: "Add core/backline to Acceptance Environment"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: "Rebuild and promote the worker"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: "Destroy Release Chanel"
-    command: /bin/true
+    command: .buildkite/scripts/destroy_release_channel.sh
     agents:
       queue: habitat-release
 
   - label: ":github: Publish Github Release"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
 
   - label: "Update Documentation"
     command: /bin/true
+    skip: Not implemented yet
     agents:
       queue: habitat-release
