@@ -34,8 +34,8 @@ set_hab_binary() {
         # should be coming from the release channel, and should be the
         # same packages built previously in this same release pipeline.
 
-        hab pkg install "${hab_ident}"
-        hab pkg install "${studio_ident}"
+        sudo hab pkg install "${hab_ident}"
+        sudo hab pkg install "${studio_ident}"
         declare -g hab_binary="/hab/pkgs/${hab_ident}/bin/hab"
     else
         echo -e ":buildkite: metadata NOT found; using previously-installed hab binary"
