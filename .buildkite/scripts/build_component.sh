@@ -26,7 +26,7 @@ set_hab_binary() {
     local hab_ident=$(buildkite-agent meta-data get hab-version)
     local studio_ident=$(buildkite-agent meta-data get studio-version)
 
-    echo "--- :thinking_face: Determining which `hab` binary to use"
+    echo "--- :thinking_face: Determining which 'hab' binary to use"
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
         echo -e ":buildkite: metadata found; installing new versions of 'core/hab' and 'core/hab-studio'"
         # By definition, these will be fully-qualified identifiers,
@@ -93,6 +93,11 @@ case "${component}" in
     *)
         ;;
 esac
+
+buildkite-agent annotate \
+                --append \
+                --context="release-manifest" \
+                "* ${pkg_ident}"
 
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel"
 ${hab_binary} pkg upload \
