@@ -19,7 +19,7 @@ if [[ "${FAKE_RELEASE_TAG}" || "${BUILDKITE_TAG}" ]]; then
     # TODO (CM): Should we proactively destroy the channel here if it
     # already exists?
 
-    cat << EOF | buildkite-agent annotate --style "success" --context "release-manifest"
+    cat << EOF | buildkite-agent annotate --context "release-manifest"
     ## Habitat Release _${release}_
 EOF
 
