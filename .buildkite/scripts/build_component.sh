@@ -121,7 +121,7 @@ case "${component}" in
         ;;
 esac
 
-echo -e "* ${pkg_ident}\n" | buildkite-agent annotate --append --context "release-manifest"
+echo -e "<br>* ${pkg_ident}" | buildkite-agent annotate --append --context "release-manifest"
 
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel"
 ${hab_binary} pkg upload \
