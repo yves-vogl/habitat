@@ -2,23 +2,6 @@
 
 set -euo pipefail
 
-# TODO (CM): Consider setting HAB_NONINTERACTIVE in the top-level
-# environment, instead
-export HAB_NONINTERACTIVE=1
-
-# `component` should be the subdirectory name in `components` where a
-# particular component code resides.
-#
-# e.g. `hab` for `core/hab`, `plan-build` for `core/hab-plan-build`,
-# etc.
-component=${1}
-
-channel=$(buildkite-agent meta-data get "release-channel")
-
-# This function _must_ be called first!
-set_habitat_binary
-import_keys
-
 # TODO (CM): Extract this function to somewhere else?
 import_keys() {
     echo "--- :key: Downloading 'core' public keys from Builder"
@@ -60,6 +43,27 @@ set_hab_binary() {
     fi
     echo ":habicat: Using $(${hab_binary} --version)"
 }
+
+########################################################################
+
+# TODO (CM): Consider setting HAB_NONINTERACTIVE in the top-level
+# environment, instead
+export HAB_NONINTERACTIVE=1
+
+# `component` should be the subdirectory name in `components` where a
+# particular component code resides.
+#
+# e.g. `hab` for `core/hab`, `plan-build` for `core/hab-plan-build`,
+# etc.
+component=${1}
+
+channel=$(buildkite-agent meta-data get "release-channel")
+
+# This function _must_ be called first!
+set_hab_binary
+
+import_keys
+
 
 echo "--- :zap: Cleaning up old studio, if present"
 ${hab_binary} studio rm
