@@ -28,7 +28,7 @@ set_hab_binary() {
 
     echo "--- :thinking_face: Determining which 'hab' binary to use"
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
-        echo -e ":buildkite: metadata found; installing new versions of 'core/hab' and 'core/hab-studio'"
+        echo "Buildkite metadata found; installing new versions of 'core/hab' and 'core/hab-studio'"
         # By definition, these will be fully-qualified identifiers,
         # and thus do not require a `--channel` option. However, they
         # should be coming from the release channel, and should be the
@@ -38,10 +38,10 @@ set_hab_binary() {
         sudo hab pkg install "${studio_ident}"
         declare -g hab_binary="/hab/pkgs/${hab_ident}/bin/hab"
     else
-        echo -e ":buildkite: metadata NOT found; using previously-installed hab binary"
+        echo "Buildkite metadata NOT found; using previously-installed hab binary"
         declare -g hab_binary="$(which hab)"
     fi
-    echo ":habicat: Using $(${hab_binary} --version)"
+    echo "--- :habicat: Using $(${hab_binary} --version)"
 }
 
 ########################################################################

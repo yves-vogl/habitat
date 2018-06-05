@@ -7,8 +7,7 @@ if [[ "${FAKE_RELEASE_TAG}" || "${BUILDKITE_TAG}" ]]; then
     echo -e "--- :sparkles: Preparing for a release! :sparkles:"
 
     if [[ "${FAKE_RELEASE_TAG}" ]]; then
-        # TODO (CM): this echo -e doesn't seem to work?
-        echo -e "Using fake release tag '${FAKE_RELEASE_TAG}'"
+        echo "Using fake release tag '${FAKE_RELEASE_TAG}'"
         release="${FAKE_RELEASE_TAG}"
     elif [[ "${BUILDKITE_TAG}" ]]; then
         echo "Using release tag '${BUILDKITE_TAG}'"
