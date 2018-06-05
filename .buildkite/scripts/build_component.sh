@@ -57,9 +57,14 @@ set_studio_binary() {
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
         # use that studio ident
         declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
+        # We will have already installed the studio above
     else
         # use the old ident... this is fragile right now, obviously
-        declare -g studio_bin="/hab/pkgs/core/hab-studio/0.56.0/20180530235913/bin/hab-studio"
+        # TODO (CM): Could just install core/hab-studio from stable
+        # and sort out what the full ident is.
+        studio_ident="core/hab-studio/0.56.0/20180530235913"
+        declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
+        sudo hab pkg install "${studio_ident}"
     fi
     echo "--- :habicat: Using '${studio_bin}'"
 }
