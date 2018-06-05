@@ -22,6 +22,7 @@ steps:
 
   - wait
 
+  # TODO: Ensure that plan-build pulls in the core/hab we built above ^^
   - label: ":linux: :habicat: :hammer_and_wrench: core/hab-plan-build"
     command: .buildkite/scripts/build_component.sh plan-build
     agents:
@@ -33,12 +34,7 @@ steps:
     agents:
       queue: habitat-release
 
-  - wait
-
-  - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
-    command: .buildkite/scripts/build_component.sh backline
-    agents:
-      queue: habitat-release
+  # This must pull in the core/hab we built ^^^
 
   # TODO: Need to upload things to the proper bintray channels when we
   # build them... or maybe once we've built them all?
@@ -55,6 +51,15 @@ steps:
 
   - wait
 
+  # This must pull in the core/backline we built ^^^
+  - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
+    command: .buildkite/scripts/build_component.sh backline
+    agents:
+      queue: habitat-release
+
+  - wait
+
+  # TODO: This only depends on core/hab, so it could theoretically be built alongside plan-build and backline
   - label: ":linux: :habicat: core/hab-studio"
     command: .buildkite/scripts/build_component.sh studio
     agents:
@@ -69,7 +74,7 @@ steps:
   - wait
 
   - label: ":linux: :habicat: core/hab-sup"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh sup
     agents:
       queue: habitat-release
 
@@ -85,17 +90,17 @@ steps:
 
   # TODO: Create an ACI emoji
   - label: ":habicat: core/hab-pkg-aci"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-aci
     agents:
       queue: habitat-release
 
   - label: ":cloudfoundry: core/hab-pkg-cfize"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-cfize
     agents:
       queue: habitat-release
 
   - label: ":linux: :docker: core/hab-pkg-export-docker"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-export-docker
     agents:
       queue: habitat-release
 
@@ -106,17 +111,17 @@ steps:
       queue: habitat-release
 
   - label: ":k8s: core/hab-pkg-export-kubernetes"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-export-kubernetes
     agents:
       queue: habitat-release
 
   - label: ":helm: core/hab-pkg-export-helm"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-export-helm
     agents:
       queue: habitat-release
 
   - label: ":linux: :package: core/hab-pkg-export-tar"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-export-tar
     agents:
       queue: habitat-release
 
@@ -128,7 +133,7 @@ steps:
 
   # TODO: Create a Mesos emoji
   - label: ":habicat: core/hab-pkg-mesosize"
-    command: /bin/true
+    command: .buildkite/scripts/build_component.sh pkg-mesosize
     agents:
       queue: habitat-release
 
