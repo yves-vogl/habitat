@@ -22,7 +22,7 @@ if [[ "${FAKE_RELEASE_TAG}" || "${BUILDKITE_TAG}" ]]; then
 
     buildkite-agent annotate --style=success \
                     --context="release-manifest" \
-                    "## Habitat Release _${release}_"
+                    "## Habitat Release _${release}_\n"
     buildkite-agent meta-data set "release-channel" "${channel}"
     buildkite-agent pipeline upload .buildkite/release_pipeline.yaml
 else

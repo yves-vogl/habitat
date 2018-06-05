@@ -97,7 +97,7 @@ esac
 buildkite-agent annotate \
                 --append \
                 --context="release-manifest" \
-                "* ${pkg_ident}"
+                "* ${pkg_ident}\n"
 
 echo "--- :habicat: Uploading ${pkg_ident} to Builder in the '${channel}' channel"
 ${hab_binary} pkg upload \
