@@ -1,8 +1,11 @@
 #!/bin/bash
 
-# Obviously, this is a filthy, temporary hack
+
+# TODO (CM): logging when we _don't_ execute this
+
 if [[ "${BUILDKITE_AGENT_META_DATA_QUEUE}" == "habitat-release" ]]; then
     echo "--- Cleaning up... removing newer hab-studios"
+    # Obviously, this is a filthy, temporary hack
     sudo rm -Rf /hab/pkgs/core/hab-studio/0.57.0-dev
     sudo rm -Rf /hab/cache/artifacts/core-hab-studio-0.57.0-dev*
 fi

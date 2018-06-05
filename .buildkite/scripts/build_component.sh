@@ -38,39 +38,13 @@ set_hab_binary() {
         sudo hab pkg install "${hab_ident}"
         sudo hab pkg install "${studio_ident}"
         declare -g hab_binary="/hab/pkgs/${hab_ident}/bin/hab"
+        declare -g new_studio="true"
     else
         echo "Buildkite metadata NOT found; using previously-installed hab binary"
         declare -g hab_binary="$(which hab)"
-    fi
-    echo "--- :habicat: Using $(${hab_binary} --version)"
-}
-
-
-# This is a workaround to not being able to delete artifacts from our
-# builders at the moment. Once we've built a studio in a previous
-# pipeline run (that doesn't succeed), it can poison subsequent runs
-# if they're on the same machine.
-set_studio_binary() {
-    echo "--- :thinking_face: Determining which 'hab-studio' binary to use"
-
-    local hab_ident=$(buildkite-agent meta-data get hab-version)
-    local studio_ident=$(buildkite-agent meta-data get studio-version)
-
-    if [[ "${hab_ident}" && "${studio_ident}" ]]; then
-        # use that studio ident
-        declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
-        declare -g new_studio="true"
-        # We will have already installed the studio above
-    else
-        # use the old ident... this is fragile right now, obviously
-        # TODO (CM): Could just install core/hab-studio from stable
-        # and sort out what the full ident is.
-        studio_ident="core/hab-studio/0.56.0/20180530235913"
-        declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
-        sudo hab pkg install "${studio_ident}"
         declare -g new_studio="false"
     fi
-    echo "--- :habicat: Using '${studio_bin}'"
+    echo "--- :habicat: Using $(${hab_binary} --version)"
 }
 
 ########################################################################
@@ -90,12 +64,10 @@ channel=$(buildkite-agent meta-data get "release-channel")
 
 # This function _must_ be called first!
 set_hab_binary
-set_studio_binary
 import_keys
 
-
 echo "--- :zap: Cleaning up old studio, if present"
-HAB_STUDIO_BINARY="${studio_bin}" ${hab_binary} studio rm
+${hab_binary} studio rm
 
 echo "--- :habicat: Building components/${component}"
 
@@ -105,10 +77,13 @@ unset HAB_BINLINK_DIR
 export HAB_ORIGIN=core
 
 # Eww
+#
+# CI_OVERRIDE_CHANNEL is basically used to tell the studio which
+# hab/backline to grab
 if [[ "${new_studio}" == "true" ]]; then
-    CI_OVERRIDE_CHANNEL="${channel}" HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
+    CI_OVERRIDE_CHANNEL="${channel}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
 else
-    HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
+    HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
 fi
 source results/last_build.env
 
