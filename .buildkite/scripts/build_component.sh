@@ -59,6 +59,7 @@ set_studio_binary() {
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
         # use that studio ident
         declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
+        declare -g new_studio="true"
         # We will have already installed the studio above
     else
         # use the old ident... this is fragile right now, obviously
@@ -67,6 +68,7 @@ set_studio_binary() {
         studio_ident="core/hab-studio/0.56.0/20180530235913"
         declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
         sudo hab pkg install "${studio_ident}"
+        declare -g new_studio="false"
     fi
     echo "--- :habicat: Using '${studio_bin}'"
 }
@@ -102,8 +104,12 @@ echo "--- :habicat: Building components/${component}"
 unset HAB_BINLINK_DIR
 export HAB_ORIGIN=core
 
-HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
-
+# Eww
+if [[ "${new_studio}" == "true" ]]; then
+    CI_OVERRIDE_CHANNEL="${channel}" HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
+else
+    HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
+fi
 source results/last_build.env
 
 case "${component}" in
