@@ -44,6 +44,26 @@ set_hab_binary() {
     echo "--- :habicat: Using $(${hab_binary} --version)"
 }
 
+
+# This is a workaround to not being able to delete artifacts from our
+# builders at the moment. Once we've built a studio in a previous
+# pipeline run (that doesn't succeed), it can poison subsequent runs
+# if they're on the same machine.
+set_studio_binary() {
+    local hab_ident=$(buildkite-agent meta-data get hab-version)
+    local studio_ident=$(buildkite-agent meta-data get studio-version)
+    echo "--- :thinking_face: Determining which 'hab-studio' binary to use"
+
+    if [[ "${hab_ident}" && "${studio_ident}" ]]; then
+        # use that studio ident
+        declare -g studio_bin="/hab/pkgs/${studio_ident}/bin/hab-studio"
+    else
+        # use the old ident... this is fragile right now, obviously
+        declare -g studio_bin="/hab/pkgs/core/hab-studio/0.56.0/20180530235913/bin/hab-studio"
+    fi
+    echo "--- :habicat: Using '${studio_bin}'"
+}
+
 ########################################################################
 
 # TODO (CM): Consider setting HAB_NONINTERACTIVE in the top-level
@@ -61,12 +81,12 @@ channel=$(buildkite-agent meta-data get "release-channel")
 
 # This function _must_ be called first!
 set_hab_binary
-
+set_studio_binary
 import_keys
 
 
 echo "--- :zap: Cleaning up old studio, if present"
-${hab_binary} studio rm
+HAB_STUDIO_BINARY="${studio_bin}" ${hab_binary} studio rm
 
 echo "--- :habicat: Building components/${component}"
 
@@ -75,7 +95,7 @@ echo "--- :habicat: Building components/${component}"
 unset HAB_BINLINK_DIR
 export HAB_ORIGIN=core
 
-HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
+HAB_STUDIO_BINARY="${studio_bin}" HAB_BLDR_CHANNEL="${channel}" ${hab_binary} pkg build "components/${component}"
 
 source results/last_build.env
 
