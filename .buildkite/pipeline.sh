@@ -21,7 +21,7 @@ if [[ "${FAKE_RELEASE_TAG}" || "${BUILDKITE_TAG}" ]]; then
     # already exists?
 
     cat << EOF | buildkite-agent annotate --style "success" --context "release-manifest"
-    ## Habitat Release _${release}
+    ## Habitat Release _${release}_
 EOF
 
     buildkite-agent meta-data set "release-channel" "${channel}"
