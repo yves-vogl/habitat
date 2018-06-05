@@ -23,10 +23,11 @@ import_keys() {
 # switch subsequent builds to use the new hab, which in turn uses the
 # new studio.
 set_hab_binary() {
+    echo "--- :thinking_face: Determining which 'hab' binary to use"
+
     local hab_ident=$(buildkite-agent meta-data get hab-version)
     local studio_ident=$(buildkite-agent meta-data get studio-version)
 
-    echo "--- :thinking_face: Determining which 'hab' binary to use"
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
         echo "Buildkite metadata found; installing new versions of 'core/hab' and 'core/hab-studio'"
         # By definition, these will be fully-qualified identifiers,
@@ -50,9 +51,10 @@ set_hab_binary() {
 # pipeline run (that doesn't succeed), it can poison subsequent runs
 # if they're on the same machine.
 set_studio_binary() {
+    echo "--- :thinking_face: Determining which 'hab-studio' binary to use"
+
     local hab_ident=$(buildkite-agent meta-data get hab-version)
     local studio_ident=$(buildkite-agent meta-data get studio-version)
-    echo "--- :thinking_face: Determining which 'hab-studio' binary to use"
 
     if [[ "${hab_ident}" && "${studio_ident}" ]]; then
         # use that studio ident
