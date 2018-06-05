@@ -8,15 +8,15 @@ steps:
     agents:
       queue: habitat-release
 
-  # TODO: Implement this
   - label: ":windows: :habicat: core/hab"
     command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
-  # TODO: Implement this
   - label: ":mac: :habicat: core/hab"
     command: /bin/true
+    skip: "No Mac builders yet"
     agents:
       queue: habitat-release
 
@@ -27,9 +27,9 @@ steps:
     agents:
       queue: habitat-release
 
-  # TODO: Implement this
   - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
     command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -49,6 +49,7 @@ steps:
 
   - label: ":windows: :habicat: core/hab-bintray-publish"
     command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -61,6 +62,7 @@ steps:
 
   - label: ":windows: :habicat: core/hab-studio"
     command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -71,9 +73,9 @@ steps:
     agents:
       queue: habitat-release
 
-  # TODO: Implement this
   - label: ":windows: :habicat: core/hab-sup"
     command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -92,9 +94,14 @@ steps:
     agents:
       queue: habitat-release
 
-  # TODO: Windows, too
-  - label: ":docker: core/hab-pkg-export-docker"
+  - label: ":linux: :docker: core/hab-pkg-export-docker"
     command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":windows: :docker: core/hab-pkg-export-docker"
+    command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
@@ -108,9 +115,14 @@ steps:
     agents:
       queue: habitat-release
 
-  # TODO: Windows, too
-  - label: ":package: core/hab-pkg-export-tar"
+  - label: ":linux: :package: core/hab-pkg-export-tar"
     command: /bin/true
+    agents:
+      queue: habitat-release
+
+  - label: ":windows: :package: core/hab-pkg-export-tar"
+    command: /bin/true
+    skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
