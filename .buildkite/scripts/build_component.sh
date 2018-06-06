@@ -87,11 +87,13 @@ else
 fi
 source results/last_build.env
 
+# TODO (CM): we'll need to scope these by architecture
 case "${component}" in
     "hab")
         echo "--- :buildkite: Storing artifact ${pkg_ident}"
         # buildkite-agent artifact upload "results/${pkg_artifact}"
         buildkite-agent meta-data set "hab-version" "${pkg_ident}"
+        buildkite-agent meta-data set "hab-artifact" "${pkg_artifact}"
         ;;
     "studio")
         echo "--- :buildkite: Recording metadata for ${pkg_ident}"

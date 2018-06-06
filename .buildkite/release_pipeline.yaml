@@ -3,137 +3,164 @@
 # instance.
 
 steps:
-  - label: ":linux: :habicat: core/hab"
-    command: .buildkite/scripts/build_component.sh hab
+  # - label: ":linux: :habicat: core/hab"
+  #   command: .buildkite/scripts/build_component.sh hab
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :habicat: core/hab"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":mac: :habicat: core/hab"
+  #   command: /bin/true
+  #   skip: "No Mac builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  # # TODO: Ensure that plan-build pulls in the core/hab we built above ^^
+  # - label: ":linux: :habicat: :hammer_and_wrench: core/hab-plan-build"
+  #   command: .buildkite/scripts/build_component.sh plan-build
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # # This must pull in the core/hab we built ^^^
+
+  # # TODO: Need to upload things to the proper bintray channels when we
+  # # build them... or maybe once we've built them all?
+  # - label: ":linux: :habicat: core/hab-bintray-publish"
+  #   command: .buildkite/scripts/build_component.sh bintray-publish
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :habicat: core/hab-bintray-publish"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  # # This must pull in the core/backline we built ^^^
+  # - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
+  #   command: .buildkite/scripts/build_component.sh backline
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  # # TODO: This only depends on core/hab, so it could theoretically be built alongside plan-build and backline
+  # - label: ":linux: :habicat: core/hab-studio"
+  #   command: .buildkite/scripts/build_component.sh studio
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :habicat: core/hab-studio"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  # - label: ":linux: :habicat: core/hab-sup"
+  #   command: .buildkite/scripts/build_component.sh sup
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :habicat: core/hab-sup"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  # # Exporters
+
+  # # TODO: Create an ACI emoji
+  # - label: ":habicat: core/hab-pkg-aci"
+  #   command: .buildkite/scripts/build_component.sh pkg-aci
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":cloudfoundry: core/hab-pkg-cfize"
+  #   command: .buildkite/scripts/build_component.sh pkg-cfize
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":linux: :docker: core/hab-pkg-export-docker"
+  #   command: .buildkite/scripts/build_component.sh pkg-export-docker
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :docker: core/hab-pkg-export-docker"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":k8s: core/hab-pkg-export-kubernetes"
+  #   command: .buildkite/scripts/build_component.sh pkg-export-kubernetes
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":helm: core/hab-pkg-export-helm"
+  #   command: .buildkite/scripts/build_component.sh pkg-export-helm
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":linux: :package: core/hab-pkg-export-tar"
+  #   command: .buildkite/scripts/build_component.sh pkg-export-tar
+  #   agents:
+  #     queue: habitat-release
+
+  # - label: ":windows: :package: core/hab-pkg-export-tar"
+  #   command: /bin/true
+  #   skip: "No Windows builders yet"
+  #   agents:
+  #     queue: habitat-release
+
+  # # TODO: Create a Mesos emoji
+  # - label: ":habicat: core/hab-pkg-mesosize"
+  #   command: .buildkite/scripts/build_component.sh pkg-mesosize
+  #   agents:
+  #     queue: habitat-release
+
+  # - wait
+
+  - label: "just some crap"
+    command: buildkite-agent meta-data set hab-artifact core/hab/0.57.0-dev/20180606132059
     agents:
       queue: habitat-release
 
-  - label: ":windows: :habicat: core/hab"
+  - label: ":linux: Upload (but don't publish!) artifacts to Bintray"
+    command: .buildkite/scripts/upload_to_bintray.sh
+    agents:
+      queue: habitat-release
+
+  - label: ":windows: Upload (but don't publish!) artifacts to Bintray"
     command: /bin/true
     skip: "No Windows builders yet"
     agents:
       queue: habitat-release
 
-  - label: ":mac: :habicat: core/hab"
+  # TODO: Until we can store Mac artifacts in Builder directly, we
+  # probably need to upload the artifact to Buildkite and grab it from
+  # this script (once we write it)
+  - label: ":mac: Upload (but don't publish!) artifacts to Bintray"
     command: /bin/true
     skip: "No Mac builders yet"
-    agents:
-      queue: habitat-release
-
-  - wait
-
-  # TODO: Ensure that plan-build pulls in the core/hab we built above ^^
-  - label: ":linux: :habicat: :hammer_and_wrench: core/hab-plan-build"
-    command: .buildkite/scripts/build_component.sh plan-build
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :habicat: :hammer_and_wrench: core/hab-plan-build-ps1"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  # This must pull in the core/hab we built ^^^
-
-  # TODO: Need to upload things to the proper bintray channels when we
-  # build them... or maybe once we've built them all?
-  - label: ":linux: :habicat: core/hab-bintray-publish"
-    command: .buildkite/scripts/build_component.sh bintray-publish
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :habicat: core/hab-bintray-publish"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  - wait
-
-  # This must pull in the core/backline we built ^^^
-  - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
-    command: .buildkite/scripts/build_component.sh backline
-    agents:
-      queue: habitat-release
-
-  - wait
-
-  # TODO: This only depends on core/hab, so it could theoretically be built alongside plan-build and backline
-  - label: ":linux: :habicat: core/hab-studio"
-    command: .buildkite/scripts/build_component.sh studio
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :habicat: core/hab-studio"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  - wait
-
-  - label: ":linux: :habicat: core/hab-sup"
-    command: .buildkite/scripts/build_component.sh sup
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :habicat: core/hab-sup"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  - wait
-
-  # Exporters
-
-  # TODO: Create an ACI emoji
-  - label: ":habicat: core/hab-pkg-aci"
-    command: .buildkite/scripts/build_component.sh pkg-aci
-    agents:
-      queue: habitat-release
-
-  - label: ":cloudfoundry: core/hab-pkg-cfize"
-    command: .buildkite/scripts/build_component.sh pkg-cfize
-    agents:
-      queue: habitat-release
-
-  - label: ":linux: :docker: core/hab-pkg-export-docker"
-    command: .buildkite/scripts/build_component.sh pkg-export-docker
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :docker: core/hab-pkg-export-docker"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  - label: ":k8s: core/hab-pkg-export-kubernetes"
-    command: .buildkite/scripts/build_component.sh pkg-export-kubernetes
-    agents:
-      queue: habitat-release
-
-  - label: ":helm: core/hab-pkg-export-helm"
-    command: .buildkite/scripts/build_component.sh pkg-export-helm
-    agents:
-      queue: habitat-release
-
-  - label: ":linux: :package: core/hab-pkg-export-tar"
-    command: .buildkite/scripts/build_component.sh pkg-export-tar
-    agents:
-      queue: habitat-release
-
-  - label: ":windows: :package: core/hab-pkg-export-tar"
-    command: /bin/true
-    skip: "No Windows builders yet"
-    agents:
-      queue: habitat-release
-
-  # TODO: Create a Mesos emoji
-  - label: ":habicat: core/hab-pkg-mesosize"
-    command: .buildkite/scripts/build_component.sh pkg-mesosize
     agents:
       queue: habitat-release
 
