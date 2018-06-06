@@ -48,7 +48,9 @@ HAB_BLDR_CHANNEL=${channel} \
 # TODO (CM): Surface the Bintray download URL as an annotation
 echo "--- :habicat: Uploading core/hab-studio to Bintray"
 
+# again, override just for backline
 HAB_BLDR_CHANNEL="${channel}" \
+CI_OVERRIDE_CHANNEL="${channel}" \
                 hab pkg exec core/hab-bintray-publish \
                 publish-studio \
                 -r stable

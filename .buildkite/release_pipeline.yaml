@@ -140,7 +140,7 @@ steps:
   # - wait
 
   - label: "just some crap"
-    command: buildkite-agent meta-data set hab-artifact core/hab/0.57.0-dev/20180606132059
+    command: buildkite-agent meta-data set hab-artifact core-hab-0.57.0-dev-20180606132059-x86_64-linux.hart
     agents:
       queue: habitat-release
 
