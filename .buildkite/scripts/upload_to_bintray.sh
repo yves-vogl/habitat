@@ -47,18 +47,16 @@ sudo -E HAB_BLDR_CHANNEL=${channel} \
                 -r stable \
                 "/hab/cache/artifacts/${hab_artifact}"
 
-echo
-echo
-cat results/last_build.env
-echo
 source results/last_build.env
-echo
-cat results/${pkg_artifact}.sha256sum
-echo
+shasum=$(awk '{print $1}' results/${pkg_artifact}.sha256sum)
+cat << EOF | buildkite-agent annotate --style=success --context=bintray-hab
+<h3>Habitat Bintray Binary</h3>
+Artifact: <code>${pkg_artifact}</code>
+<br/>
+SHA256: <code>${shasum}</code>
+EOF
 
-# TODO (CM): Surface the Bintray download URL as an annotation
 echo "--- :habicat: Uploading core/hab-studio to Bintray"
-
 # again, override just for backline
 sudo -E HAB_BLDR_CHANNEL="${channel}" \
 CI_OVERRIDE_CHANNEL="${channel}" \
