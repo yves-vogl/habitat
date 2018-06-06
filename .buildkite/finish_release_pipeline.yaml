@@ -1,8 +1,7 @@
 steps:
 
-  - label: ":habicat: Promote Release to Stable"
-    command: /bin/true
-    skip: Not implemented yet
+  - label: ":habicat: Promote Release in Builder"
+    command: .buildkite/scripts/promote_release_channel.sh
     agents:
       queue: habitat-release
 
@@ -40,6 +39,7 @@ steps:
 
   - label: ":habicat: Destroy Release Channel"
     command: .buildkite/scripts/destroy_release_channel.sh
+    skip: "Not destroying things while testing out other parts of the pipeline"
     agents:
       queue: habitat-release
 
