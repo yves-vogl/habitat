@@ -47,6 +47,15 @@ sudo -E HAB_BLDR_CHANNEL=${channel} \
                 -r stable \
                 "/hab/cache/artifacts/${hab_artifact}"
 
+echo
+echo
+cat results/last_build.env
+echo
+ls -alh
+echo
+cat *.sha256sum
+echo
+
 # TODO (CM): Surface the Bintray download URL as an annotation
 echo "--- :habicat: Uploading core/hab-studio to Bintray"
 
