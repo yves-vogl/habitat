@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+# TODO: bintray user = chef-releng-ops!
+
  # TODO (CM): Seriously... noninteractive
 
 # We need to upload (but not publish) artifacts to Bintray right now.
