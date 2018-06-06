@@ -36,20 +36,20 @@ steps:
 
   # # This must pull in the core/hab we built ^^^
 
-  # # TODO: Need to upload things to the proper bintray channels when we
-  # # build them... or maybe once we've built them all?
-  # - label: ":linux: :habicat: core/hab-bintray-publish"
-  #   command: .buildkite/scripts/build_component.sh bintray-publish
-  #   agents:
-  #     queue: habitat-release
+  # TODO: Need to upload things to the proper bintray channels when we
+  # build them... or maybe once we've built them all?
+  - label: ":linux: :habicat: core/hab-bintray-publish"
+    command: .buildkite/scripts/build_component.sh bintray-publish
+    agents:
+      queue: habitat-release
 
-  # - label: ":windows: :habicat: core/hab-bintray-publish"
-  #   command: /bin/true
-  #   skip: "No Windows builders yet"
-  #   agents:
-  #     queue: habitat-release
+  - label: ":windows: :habicat: core/hab-bintray-publish"
+    command: /bin/true
+    skip: "No Windows builders yet"
+    agents:
+      queue: habitat-release
 
-  # - wait
+  - wait
 
   # # This must pull in the core/backline we built ^^^
   # - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
