@@ -51,9 +51,9 @@ echo
 echo
 cat results/last_build.env
 echo
-ls -alh
+source results/last_build.env
 echo
-cat *.sha256sum
+cat results/${pkg_artifact}.sha256sum
 echo
 
 # TODO (CM): Surface the Bintray download URL as an annotation
