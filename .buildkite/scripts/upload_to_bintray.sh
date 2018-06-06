@@ -38,7 +38,7 @@ hab_artifact=$(buildkite-agent meta-data get "hab-artifact")
 #
 # -s = skip publishing
 # -r = the repository to upload to
-sudo HAB_BLDR_CHANNEL=${channel} \
+sudo -E HAB_BLDR_CHANNEL=${channel} \
                 hab pkg exec core/hab-bintray-publish \
                 publish-hab \
                 -s \
@@ -49,7 +49,7 @@ sudo HAB_BLDR_CHANNEL=${channel} \
 echo "--- :habicat: Uploading core/hab-studio to Bintray"
 
 # again, override just for backline
-sudo HAB_BLDR_CHANNEL="${channel}" \
+sudo -E HAB_BLDR_CHANNEL="${channel}" \
 CI_OVERRIDE_CHANNEL="${channel}" \
                 hab pkg exec core/hab-bintray-publish \
                 publish-studio \
