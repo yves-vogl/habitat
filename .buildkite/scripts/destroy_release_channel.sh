@@ -18,3 +18,6 @@ echo "--- Destroying release channel '${channel}'"
 HAB_AUTH_TOKEN="${HAB_TEAM_AUTH_TOKEN}" hab bldr channel destroy \
     --origin=core \
     "${channel}"
+
+# if we're using a fake channel, then nuke the "stable" channel for
+# it, too

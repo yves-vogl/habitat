@@ -81,9 +81,8 @@ done
 for rel_target in ${!pkg_releases[@]}
 do
     rel=${pkg_releases[$rel_target]}
-    echo "--- :habicat: Promoting $rel_target-$rel to $PROMOTE_CHANNEL"
-    echo "NOT REALLY EXECUTING THIS JUST YET"
-    echo "hab pkg promote $rel $PROMOTE_CHANNEL"
+    echo "--- :habicat: Promoting $rel to $PROMOTE_CHANNEL"
+    hab pkg promote $rel $PROMOTE_CHANNEL
 done
 
 echo "--- :thumbsup: Done!"

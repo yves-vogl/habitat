@@ -39,7 +39,6 @@ steps:
 
   - label: ":habicat: Destroy Release Channel"
     command: .buildkite/scripts/destroy_release_channel.sh
-    skip: "Not destroying things while testing out other parts of the pipeline"
     agents:
       queue: habitat-release
 
