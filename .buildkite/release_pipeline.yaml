@@ -144,6 +144,8 @@ steps:
     agents:
       queue: habitat-release
 
+  - wait
+
   - label: ":linux: Upload (but don't publish!) artifacts to Bintray"
     command: .buildkite/scripts/upload_to_bintray.sh
     agents:

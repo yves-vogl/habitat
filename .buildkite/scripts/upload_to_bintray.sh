@@ -2,6 +2,7 @@
 
 set -euo pipefail
 
+ # TODO (CM): Seriously... noninteractive
 
 # We need to upload (but not publish) artifacts to Bintray right now.
 
@@ -10,7 +11,7 @@ channel=$(buildkite-agent meta-data get "release-channel")
 # TODO (CM): extract set_hab_binary function to a common library and
 # use it here
 
-echo "--- :habicat: Installing core/hab-bintray-publish from '${channel}'"
+echo "--- :habicat: Installing core/hab-bintray-publish from '${channel}' channel"
 sudo hab pkg install \
      --channel="${channel}" \
      core/hab-bintray-publish
