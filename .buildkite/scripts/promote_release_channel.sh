@@ -82,7 +82,7 @@ for rel_target in ${!pkg_releases[@]}
 do
     rel=${pkg_releases[$rel_target]}
     echo "--- :habicat: Promoting $rel to $PROMOTE_CHANNEL"
-    hab pkg promote $rel $PROMOTE_CHANNEL
+    hab pkg promote --auth=${HAB_TEAM_AUTH_TOKEN} $rel $PROMOTE_CHANNEL
 done
 
 echo "--- :thumbsup: Done!"
