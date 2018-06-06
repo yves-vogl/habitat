@@ -141,6 +141,12 @@ info() {
   return 0
 }
 
+cleanup() {
+    original_exit="${?}"
+    rm -f "${HOME}/.docker/config.json"
+    exit "${original_exit}"
+}
+
 # **Internal** Main program.
 _main() {
   build-docker-image $@
@@ -151,7 +157,7 @@ _main() {
 
   info "Logging in to Bintray Docker repo"
   docker login -u="$BINTRAY_USER" -p="$BINTRAY_KEY" habitat-docker-registry.bintray.io
-  trap 'rm -f $HOME/.docker/config.json; exit $?' INT TERM EXIT
+  trap cleanup INT TERM EXIT
 
   info "Pushing ${docker_image}:$docker_image_version"
   docker push "${docker_image}:$docker_image_version"
@@ -164,6 +170,8 @@ _main() {
   info "Docker Image: docker pull ${docker_image}"
   info
 }
+
+
 
 
 # # Main Flow
