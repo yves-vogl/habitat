@@ -60,7 +60,7 @@ CI_OVERRIDE_CHANNEL="${channel}" \
 # The logic for the creation of this image is spread out over soooo
 # many places :/
 source results/last_image.env
-echo << EOF | buildkite-agent annotate --style=success --context=docker-studio
+cat << EOF | buildkite-agent annotate --style=success --context=docker-studio
 <h3>Docker Studio Image</h3>
 <ul>
   <li><code>${docker_image}:${docker_image_version}</code></li>
