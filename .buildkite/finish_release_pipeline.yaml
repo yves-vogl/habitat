@@ -38,7 +38,7 @@ steps:
     agents:
       queue: habitat-release
 
-  - label: "Destroy Release Channel"
+  - label: ":habicat: Destroy Release Channel"
     command: .buildkite/scripts/destroy_release_channel.sh
     agents:
       queue: habitat-release
