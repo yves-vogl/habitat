@@ -11,9 +11,6 @@ set -euo pipefail
 channel="$(buildkite-agent meta-data get release-channel)"
 echo "--- Destroying release channel '${channel}'"
 
-# TODO (CM): Print out a list of all packages in the channel first
-
-
 # TODO (CM): Once this command takes an --auth token, use that instead
 HAB_AUTH_TOKEN="${HAB_TEAM_AUTH_TOKEN}" hab bldr channel destroy \
     --origin=core \
