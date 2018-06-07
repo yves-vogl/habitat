@@ -9,8 +9,11 @@ steps:
   #
   # It also has the nice side effect of getting our habitat-release
   # worker queue warmed up
+  #
+  # It's OK if the release channel doesn't exist at this stage; thus
+  # the /bin/true fallback
   - label: ":habicat: :boom: Destroy release channel"
-    command: .buildkite/scripts/destroy_release_channel
+    command: .buildkite/scripts/destroy_release_channel.sh || /bin/true
     agents:
       queue: habitat-release
 
