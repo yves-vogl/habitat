@@ -85,6 +85,8 @@ do
     hab pkg promote --auth=${HAB_TEAM_AUTH_TOKEN} $rel $PROMOTE_CHANNEL
 done
 
+buildkite-agent annotate --style="success" --context="release-manifest"
+
 echo "--- :thumbsup: Done!"
 
 # if [ -z ${LINUX_RELEASE+x} ]; then
