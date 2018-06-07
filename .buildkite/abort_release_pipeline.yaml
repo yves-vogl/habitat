@@ -3,7 +3,7 @@ steps:
   # so be sure to properly abstract that logic. Also, it needs to
   # happen if a package build fails, but before we get to the final
   # blocker step of the pipeline.
-  - label: ":crying_cat_face: Destroy release channel"
+  - label: ":crying_cat_face: :boom: Destroy release channel"
     command: .buildkite/scripts/destroy_release_channel.sh
     agents:
       queue: habitat-release

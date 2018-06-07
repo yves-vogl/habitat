@@ -9,7 +9,7 @@ steps:
   #
   # It also has the nice side effect of getting our habitat-release
   # worker queue warmed up
-  - label: ":habicat: Preemptively destroy release channel"
+  - label: ":habicat: :boom: Destroy release channel"
     command: .buildkite/scripts/destroy_release_channel
     agents:
       queue: habitat-release
