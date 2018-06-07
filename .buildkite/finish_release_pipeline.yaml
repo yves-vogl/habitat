@@ -5,7 +5,13 @@ steps:
     agents:
       queue: habitat-release
 
-  - wait
+  - block: ":habicat: Wait until Builder is stabilized"
+    prompt: |
+      Until we are running Builder services in leader topologies, it is
+      possible that Builder can get destabilized once the Supervisor has
+      been promoted to the stable channel. This should be less of an
+      issue as our operations and software matures, but until then, it is
+      nice to explicitly factor that into our release process
 
   - label: "Promote Bintray Releases"
     command: /bin/true
