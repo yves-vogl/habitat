@@ -14,7 +14,7 @@ steps:
   # the /bin/true fallback
   - label: ":habicat: :boom: Destroy release channel"
     command: .buildkite/scripts/destroy_release_channel.sh || /bin/true
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -22,7 +22,7 @@ steps:
 
   - label: ":linux: :habicat: core/hab"
     command: .buildkite/scripts/build_component.sh hab
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -34,6 +34,7 @@ steps:
 
   - label: ":mac: :habicat: core/hab"
     command: uname -a
+    skip: "Builds aren't quite working on the Mac builders yet"
     concurrency_group: "habitat/release/macos"
     concurrency: 1
     agents:
@@ -47,7 +48,7 @@ steps:
 
   - label: ":linux: :habicat: :hammer_and_wrench: core/hab-plan-build"
     command: .buildkite/scripts/build_component.sh plan-build
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -60,7 +61,7 @@ steps:
   # This must pull in the core/hab we built ^^^
   - label: ":linux: :habicat: core/hab-bintray-publish"
     command: .buildkite/scripts/build_component.sh bintray-publish
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -75,7 +76,7 @@ steps:
   # This must pull in the core/backline we built ^^^
   - label: ":drum_with_drumsticks: :habicat: :drum_with_drumsticks: core/hab-backline"
     command: .buildkite/scripts/build_component.sh backline
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -84,7 +85,7 @@ steps:
   # TODO: This only depends on core/hab, so it could theoretically be built alongside plan-build and backline
   - label: ":linux: :habicat: core/hab-studio"
     command: .buildkite/scripts/build_component.sh studio
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -98,7 +99,7 @@ steps:
 
   - label: ":linux: :habicat: core/hab-sup"
     command: .buildkite/scripts/build_component.sh sup
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -115,19 +116,19 @@ steps:
   # TODO: Create an ACI emoji
   - label: ":habicat: core/hab-pkg-aci"
     command: .buildkite/scripts/build_component.sh pkg-aci
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
   - label: ":cloudfoundry: core/hab-pkg-cfize"
     command: .buildkite/scripts/build_component.sh pkg-cfize
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
   - label: ":linux: :docker: core/hab-pkg-export-docker"
     command: .buildkite/scripts/build_component.sh pkg-export-docker
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -139,19 +140,19 @@ steps:
 
   - label: ":k8s: core/hab-pkg-export-kubernetes"
     command: .buildkite/scripts/build_component.sh pkg-export-kubernetes
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
   - label: ":helm: core/hab-pkg-export-helm"
     command: .buildkite/scripts/build_component.sh pkg-export-helm
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
   - label: ":linux: :package: core/hab-pkg-export-tar"
     command: .buildkite/scripts/build_component.sh pkg-export-tar
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -164,7 +165,7 @@ steps:
   # TODO: Create a Mesos emoji
   - label: ":habicat: core/hab-pkg-mesosize"
     command: .buildkite/scripts/build_component.sh pkg-mesosize
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -180,7 +181,7 @@ steps:
   # TODO Create a JFrog emoji
   - label: ":linux: Upload (but don't publish!) artifacts to Bintray"
     command: .buildkite/scripts/upload_to_bintray.sh
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     agents:
       queue: habitat-release
 
@@ -201,10 +202,10 @@ steps:
 
   # TODO: Need all versions (linux and windows)
   - block: ":thumbsup: Promote Launcher to Release Channel?"
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
 
   - block: ":shipit: :question:"
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     prompt: "Is it good to release, or do we need to go back to the drawing board?"
     fields:
       - select: "Action"
@@ -217,7 +218,7 @@ steps:
             value: "abort"
 
   - label: ":pipeline:"
-    skip: "Working on something else now"
+    # skip: "Working on something else now"
     command: .buildkite/scripts/finish_release.sh
     agents:
       queue: pipeline-trigger
