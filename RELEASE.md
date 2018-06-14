@@ -75,16 +75,7 @@ Highlights:
     $ sed -i'' -e 's/-dev//' VERSION
     ```
 
-1. Generate a new `CHANGELOG.md`
-
-    ```
-    $ export GITHUB_TOKEN=<your-token>
-    $ make changelog
-    ```
-
-The changelog generator will only process the last 1000 issues to prevent the generator from exceeding Github's rate limit threshold. This may produce a truncated changelog. If so, simply copy the last release in the generated changelog and paste it on top of the former changelog. Terrible we know but we have a better plan coming!
-
-1. Commit the `CHANGELOG.md` and `VERSION` changes and push your branch
+1. Commit `VERSION` changes and push your branch
 1. Issue a new PR await approval (in the form of a [dank gif](http://imgur.com/X0sNq)) from two maintainers
 1. Pull master once again once the PR is merged into master
 1. Create & push a Git tag
