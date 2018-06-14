@@ -85,7 +85,11 @@ Highlights:
     $ git push origin --tags
     ```
 
-Once the release tag is pushed, Travis and Appveyor builds will be triggered on the release tag. There is currently a bug where if multiple mac builds are running concurrently, one build can possibly delete some hab keys needed by the other. Until this is propperly addressed, **kill any travis builds running that are NOT part of the release tag build**.
+Once the release tag is pushed, Travis and Appveyor builds will be triggered on the release tag.
+
+You can view/adminster Travis builds here https://travis-ci.org/habitat-sh/habitat/builds.
+
+There is currently a bug where if multiple mac builds are running concurrently, one build can possibly delete some hab keys needed by the other. Until this is properly addressed, **kill any travis builds running that are NOT part of the release tag build**.
 
 The release tag builds will upload all release binaries to a channel named `rc-[VERSION]` and the hab cli will be uploaded BUT not published to the `stable` bintray repository. These builds can take nearly an hour to fully complete. Keep an eye on them so we can validate the binaries when they finish.
 
