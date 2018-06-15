@@ -95,7 +95,9 @@ The release tag builds will upload all release binaries to a channel named `rc-[
 
 ## Validate the Release
 
-For each platform, download the latest stable cli version from [Bintray](https://bintray.com/habitat/stable). These can be downloaded from the version files page but are unpublished so that our download page does not yet include them. There may be special behavior related to this release that you will want to validate but at the very least, run `hab studio enter` and make sure:
+For each platform, download the latest stable cli version from [Bintray](https://bintray.com/habitat/stable) (you will need to be signed into bintray and a member of the "Habitat" organization). These can be downloaded from the version files page but are unpublished so that our download page does not yet include them.
+
+There may be special behavior related to this release that you will want to validate but at the very least, run `hab studio enter` and make sure:
 
 Due to historical contingincies, evaluating the release is currently a bit tricky.
 
